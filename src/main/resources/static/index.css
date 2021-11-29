@@ -1,0 +1,42 @@
+* {
+    padding: 0;
+    margin : 0;
+}
+
+body {
+    width : 100vw;
+    height: 100vh;
+
+    color:  #eaecee;    
+    background :  #0a0d0f;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#title1{
+    font-size: 6.5rem;
+}
+#title2{
+    font-size: 5.5rem;
+}
+#title3{
+    font-size: 3.5rem;
+    padding-top: 2em;
+}
+
+p {
+    color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-shadow: 0px 0px 6px rgba(150, 150, 150, 1);
+}
+
+.box-letters {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+
+    cursor: default;
+}
