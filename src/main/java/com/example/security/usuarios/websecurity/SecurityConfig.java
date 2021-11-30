@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import static com.example.security.usuarios.websecurity.UserRole.*;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -27,12 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()   
-                .antMatchers("/*")
-                .permitAll() 
-                .antMatchers("/api/usuarios").hasRole(UserRole.ADMIN.name())
-                .antMatchers("/api/productos").hasAnyRole(UserRole.ADMIN.name(), UserRole.SUPERVISOR.name(), UserRole.TESTER.name())
+        http // CSRF Cross Site Request Forgery
+            .csrf().disable() // Permite acceder a las rutas - post, delete, update; ya que por defecto estan prohibidas por el mismo rol(usuario) definido.
+            .authorizeRequests()                   
+                .antMatchers("/*").permitAll()  
+                .antMatchers("/api/usuarios").hasRole(ADMIN.name())
+                .antMatchers("/api/productos").hasAnyRole(ADMIN.name(), SUPERVISOR.name(), TESTER.name())
                 .anyRequest()
                 .authenticated()
                 .and()
