@@ -8,8 +8,10 @@ import com.example.security.usuarios.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,6 +30,15 @@ public class UserController {
     @PostMapping
     public void addNewUser(@RequestBody User user) {
         userService.addUser(user);
+    }
+
+    @PutMapping
+    public void updateUser
+        (   @RequestParam(required = true) Long id,
+            @RequestParam(required = true) Integer age 
+        ) 
+    {
+        System.out.println("ID: " + id + "AGE: " + age);
     }
 
 }

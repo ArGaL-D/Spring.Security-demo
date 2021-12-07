@@ -30,11 +30,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http // CSRF Cross Site Request Forgery
-            .csrf().disable() // Permite acceder a las rutas - post, delete, update; ya que por defecto estan prohibidas por el mismo rol(usuario) definido.
+            .csrf().disable() // Permite acceder a las rutas - post, delete, update; ya que por defecto estan prohibidas - protegidas
             .authorizeRequests()                   
                 .antMatchers("/*").permitAll()  
                 .antMatchers("/api/usuarios").hasRole(ADMIN.name())
-                .antMatchers("/api/productos").hasAnyRole(ADMIN.name(), SUPERVISOR.name(), TESTER.name())
+                .antMatchers("/api/usuario").hasAnyRole(ADMIN.name(), SUPERVISOR.name(), TESTER.name())
+                .antMatchers("/api/productos").hasAnyRole(ADMIN.name(), SUPERVISOR.name(), TESTER.name())                
                 .anyRequest()
                 .authenticated()
                 .and()
