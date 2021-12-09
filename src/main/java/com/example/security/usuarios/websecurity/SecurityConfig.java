@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import static com.example.security.usuarios.websecurity.UserRole.*;
 
@@ -30,7 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http // CSRF Cross Site Request Forgery
-            .csrf().disable() // Permite acceder a las rutas - post, delete, update; ya que por defecto estan prohibidas - protegidas
+            //.csrf().disable() // Permite acceder a las rutas - post, delete, update; ya que por defecto estan prohibidas - protegidas
+            .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .and()
             .authorizeRequests()                   
                 .antMatchers("/*").permitAll()  
                 .antMatchers("/api/usuarios").hasRole(ADMIN.name())
@@ -39,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .formLogin();
     }
 
     // Users in Memory
